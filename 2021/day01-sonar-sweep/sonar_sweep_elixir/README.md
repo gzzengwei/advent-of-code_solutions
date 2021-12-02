@@ -1,21 +1,21 @@
-# SonarSweep
+## SonarSweep
 
-**TODO: Add description**
+[Day 01 - Sonar Sweep](https://adventofcode.com/2021/day/1)
 
-## Installation
+## Part 1
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `sonar_sweep_elixir` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:sonar_sweep_elixir, "~> 0.1.0"}
-  ]
-end
+```
+SonarSweep.measure_from_file("input")
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/sonar_sweep_elixir](https://hexdocs.pm/sonar_sweep_elixir).
+## Part 2
 
+```
+SonarSweep.measure_blocks_from_file("input")
+```
+
+## Test
+
+```
+mix test
+```
