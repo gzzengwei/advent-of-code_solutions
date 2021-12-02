@@ -26,9 +26,8 @@ defmodule SonarSweep do
   @block_size 3
   def window_blocks(list) do
     list
-    |> Enum.with_index()
-    |> Enum.map(&window_block(&1, list))
-    |> Enum.filter(&remove_invalid_block/1)
+    |> Stream.chunk_every(@block_size, 1, :discard)
+    |> Enum.to_list()
   end
 
   def measure_increases(list) when is_list(list) do
@@ -38,13 +37,6 @@ defmodule SonarSweep do
   def measure_increases(%Stream{} = list) do
     measure_increases_count(list, &compare_element/2)
   end
-
-  def window_block({_item, index}, list) do
-    Enum.slice(list, index..(index + @block_size - 1))
-  end
-
-  defp remove_invalid_block(block) when length(block) == @block_size, do: true
-  defp remove_invalid_block(_block), do: false
 
   defp measure_increases_count(list, compare_func) do
     list
