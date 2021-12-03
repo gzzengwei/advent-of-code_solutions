@@ -1,21 +1,29 @@
-# Dive
+## Day 02 - Dive
 
-**TODO: Add description**
+[Day 02 - Dive](https://adventofcode.com/2021/day/2)
 
-## Installation
+## Part 1
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `dive_elixir` to your list of dependencies in `mix.exs`:
+switch git tag:
 
-```elixir
-def deps do
-  [
-    {:dive_elixir, "~> 0.1.0"}
-  ]
-end
+```
+git checkout 2021-day02-part-1
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/dive_elixir](https://hexdocs.pm/dive_elixir).
+and
 
+```
+Dive.position_from_file("input")
+```
+
+## Part 2
+
+```
+Dive.position_from_file("input")
+```
+
+## Test
+
+```
+mix test
+```
