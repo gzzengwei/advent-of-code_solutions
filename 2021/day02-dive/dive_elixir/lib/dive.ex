@@ -39,33 +39,23 @@ defmodule Dive do
 
   def apply_command(
         %Command{movement: "forward", steps: steps},
-        %Position{horizontal: horizontal} = position
+        %Position{horizontal: horizontal, depth: depth, aim: aim} = position
       ) do
-    %Position{position | horizontal: horizontal + steps}
-  end
-
-  @max_depth 0
-  def apply_command(
-        %Command{movement: "up", steps: steps},
-        %Position{depth: depth} = position
-      )
-      when depth - steps < @max_depth do
-    Logger.error("Invalid commmand: up steps results in above sea level")
-    position
+    %Position{position | horizontal: horizontal + steps, depth: depth + aim * steps}
   end
 
   def apply_command(
         %Command{movement: "up", steps: steps},
-        %Position{depth: depth} = position
+        %Position{aim: aim} = position
       ) do
-    %Position{position | depth: depth - steps}
+    %Position{position | aim: aim - steps}
   end
 
   def apply_command(
         %Command{movement: "down", steps: steps},
-        %Position{depth: depth} = position
+        %Position{aim: aim} = position
       ) do
-    %Position{position | depth: depth + steps}
+    %Position{position | aim: aim + steps}
   end
 
   defp command("forward " <> steps) do

@@ -3,5 +3,5 @@ defmodule Dive.Position do
   Documentation for `Position`.
   """
 
-  defstruct horizontal: 0, depth: 0
+  defstruct horizontal: 0, depth: 0, aim: 0
 end

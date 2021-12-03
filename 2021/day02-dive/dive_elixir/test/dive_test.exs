@@ -40,44 +40,36 @@ defmodule DiveTest do
   end
 
   describe "#apply_command" do
-    test "Given `forward` command" do
+    test "Given `forward` command on initial position" do
       assert Dive.apply_command(%Command{movement: "forward", steps: 1}, %Position{}) ==
-               %Position{horizontal: 1, depth: 0}
+               %Position{horizontal: 1, depth: 0, aim: 0}
+    end
+
+    test "Given `forward` command on aim not 0 position" do
+      assert Dive.apply_command(%Command{movement: "forward", steps: 3}, %Position{
+               horizontal: 2,
+               depth: 0,
+               aim: 2
+             }) ==
+               %Position{horizontal: 5, depth: 6, aim: 2}
     end
 
     test "Given `up` command" do
       assert Dive.apply_command(%Command{movement: "up", steps: 1}, %Position{
                horizontal: 0,
-               depth: 2
+               depth: 2,
+               aim: 3
              }) ==
-               %Position{horizontal: 0, depth: 1}
-    end
-
-    test "Given invalid `up` command will be logged" do
-      fun = fn ->
-        Dive.apply_command(%Command{movement: "up", steps: 3}, %Position{
-          horizontal: 0,
-          depth: 2
-        })
-      end
-
-      assert capture_log(fun) =~ "Invalid commmand: up steps results in above sea level"
-    end
-
-    test "Given invalid `up` command returns origin position" do
-      assert Dive.apply_command(%Command{movement: "up", steps: 3}, %Position{
-               horizontal: 0,
-               depth: 2
-             }) ==
-               %Position{horizontal: 0, depth: 2}
+               %Position{horizontal: 0, depth: 2, aim: 2}
     end
 
     test "Given `down` command" do
-      assert Dive.apply_command(%Command{movement: "down", steps: 1}, %Position{
+      assert Dive.apply_command(%Command{movement: "down", steps: 2}, %Position{
                horizontal: 0,
-               depth: 2
+               depth: 2,
+               aim: 3
              }) ==
-               %Position{horizontal: 0, depth: 3}
+               %Position{horizontal: 0, depth: 2, aim: 5}
     end
   end
 
@@ -92,7 +84,7 @@ defmodule DiveTest do
         %Command{movement: "forward", steps: 2}
       ]
 
-      assert Dive.position(commands) == %Position{horizontal: 15, depth: 10}
+      assert Dive.position(commands) == %Position{horizontal: 15, depth: 60, aim: 10}
     end
   end
 
@@ -101,8 +93,8 @@ defmodule DiveTest do
       with file_path <- System.get_env("INPUT_FILE_PATH", "test/data/input"),
            %Position{horizontal: horizontal, depth: depth} = position <-
              Dive.position_from_file(file_path) do
-        assert position == %Position{horizontal: 2052, depth: 1032}
-        assert horizontal * depth == 2_117_664
+        assert position == %Position{horizontal: 2052, depth: 1_010_437, aim: 1032}
+        assert horizontal * depth == 2_073_416_724
       end
     end
   end
